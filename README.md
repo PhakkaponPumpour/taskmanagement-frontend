@@ -1,4 +1,4 @@
-# Task Management App (MERN project)
+# Simple Task Management App (MERN project)
 
 Using React+Vite,NodeJS,Express JS,MongoDB, TailwindCSS
 
