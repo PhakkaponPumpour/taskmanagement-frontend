@@ -4,13 +4,19 @@ import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { IoIosAddCircle } from "react-icons/io";
 import { IoIosHeart } from "react-icons/io";
+
+///making requests to APIs or servers.
 import axios from "axios";
 
 const Cards = ({ home, setInputDiv, data, setUpdatedData }) => {
+  //id: The user's ID fetched from localStorage
   const headers = {
     id: localStorage.getItem("id"),
+  //authorization: A Bearer token retrieved from localStorage to authenticate the API requests.
     authorization: `Bearer ${localStorage.getItem("token")}`,
   };
+
+  ///uses axios.put to send a PUT request to the backend for updating the task's completion status.
   const handleCompleteTask = async (id) => {
     try {
       await axios.put(
@@ -20,6 +26,8 @@ const Cards = ({ home, setInputDiv, data, setUpdatedData }) => {
       );
     } catch (error) {}
   };
+
+  //Sends a request to toggle the important status of a task based on its id.
   const handleImportant = async (id) => {
     try {
       const response = await axios.put(
@@ -30,6 +38,8 @@ const Cards = ({ home, setInputDiv, data, setUpdatedData }) => {
       console.log(response);
     } catch (error) {}
   };
+
+  //send a DELETE request to remove the task from the server.
   const deleteTask = async (id) => {
     try {
       const response = await axios.delete(
@@ -38,6 +48,8 @@ const Cards = ({ home, setInputDiv, data, setUpdatedData }) => {
       );
     } catch (error) {}
   };
+
+  // task data for update by setting id, title, and desc to setUpdatedData.  
   const handleUpdate = (id, title, desc) => {
     setInputDiv("fixed");
     setUpdatedData({ id: id, title: title, desc: desc });

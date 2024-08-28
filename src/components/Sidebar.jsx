@@ -3,8 +3,8 @@ import { CgNotes } from "react-icons/cg";
 import { MdOutlineLabelImportant } from "react-icons/md";
 import { SiGoogletasks } from "react-icons/si";
 import { MdOutlineAutoStories } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom"; //navigate through different routes.
+import { useDispatch } from "react-redux"; // dispatch actions to the Redux store.
 import { authAction } from "../store/auth";
 import axios from "axios";
 
@@ -12,6 +12,7 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const history = useNavigate();
 
+  //data array 
   const data = [
     {
       title: "All tasks",
@@ -34,7 +35,13 @@ const Sidebar = () => {
       link: "/IncompletedTasks",
     },
   ];
+
+  //tasks fetched from the backend.
   const [Data, setData] = useState();
+
+  //logout action to Redux (assuming authAction.logout() is an action creator that handles user logout).
+  //Clears authentication-related data from localStorage.
+  //Navigates user to the login page.
   const logout = () => {
     dispatch(authAction.logout());
     localStorage.clear("id");
@@ -46,13 +53,14 @@ const Sidebar = () => {
     authorization: `Bearer ${localStorage.getItem("token")}`,
   };
 
+  //Fetches all tasks from the backend
   useEffect(() => {
     const fetch = async () => {
       const response = await axios.get(
         "https://taskmanagement-backend-6znq.onrender.com/api/v2/get-all-tasks",
         { headers }
       );
-      setData(response.data.data);
+      setData(response.data.data); //and updates the Data state with the response.
     };
     fetch();
   }, []);

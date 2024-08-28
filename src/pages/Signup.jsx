@@ -4,16 +4,25 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 
 const Signup = () => {
+
+  //redirects users to the home page if they are already logged in
   const history = useNavigate();
+
+  /// If the user is logged in, they are redirected to the home page.
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   if (isLoggedIn === true) {
     history("/");
   }
+
+  ///Data: Manages the form inputs for username, email, and password.
   const [Data, setData] = useState({ username: "", email: "", password: "" });
   const change = (e) => {
     const { name, value } = e.target;
     setData({ ...Data, [name]: value });
   };
+
+  //It checks if all required fields are filled, 
+  //sends a POST request to the signup API, and handles the response.
   const submit = async () => {
     try {
       if (Data.username === "" || Data.email === "" || Data.password === "") {

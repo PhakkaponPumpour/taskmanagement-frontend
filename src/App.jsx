@@ -14,9 +14,17 @@ function App() {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
+
+  //Checks if the user is logged in based on localStorage and updates 
+  //the Redux state or redirects if necessary.
+
   useEffect(() => {
+    //Checks if there are valid user credentials in localStorage. If so, 
+    //it dispatches the login action to update the authentication state.
     if (localStorage.getItem("id") && localStorage.getItem("token")) {
       dispatch(authAction.login());
+
+    //If the user is not logged in, it redirects to the /login page.
     } else if (isLoggedIn === false) {
       navigate("/login");
     }

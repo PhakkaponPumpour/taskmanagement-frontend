@@ -3,8 +3,12 @@ import { IoIosClose } from "react-icons/io";
 import axios from "axios";
 
 const InputData = ({ InputDiv, setInputDiv, UpdatedData, setUpdatedData }) => {
+  
+  ///state to hold the current form input values, initialized as an object with empty title and desc fields.
   const [Data, setData] = useState({ title: "", desc: "" });
 
+  //s hook runs whenever the UpdatedData prop changes. 
+  //It updates the Data state with the title and description of the task to be updated.
   useEffect(() => {
     setData({ title: UpdatedData.title, desc: UpdatedData.desc });
   }, [UpdatedData]);
@@ -13,10 +17,15 @@ const InputData = ({ InputDiv, setInputDiv, UpdatedData, setUpdatedData }) => {
     id: localStorage.getItem("id"),
     authorization: `Bearer ${localStorage.getItem("token")}`,
   };
+
+  //function handles changes to the input fields (title and desc). It updates the Data state with the new values.
+
   const change = (e) => {
     const { name, value } = e.target;
     setData({ ...Data, [name]: value });
   };
+
+  ///sends a POST request to the backend to create a new task using the input values in Data.
   const submitData = async () => {
     if (Data.title === "" || Data.desc === "") {
       alert("Please fill all the fields");
@@ -29,9 +38,11 @@ const InputData = ({ InputDiv, setInputDiv, UpdatedData, setUpdatedData }) => {
         }
       );
       setData({ title: "", desc: "" });
-      setInputDiv("hidden");
+      setInputDiv("hidden"); //// hides the input form after submission
     }
   };
+
+  // sends a PUT request to the backend with the updated task data.
   const UpdateTask = async () => {
     if (Data.title === "" || Data.desc === "") {
       alert("Please fill all the fields");

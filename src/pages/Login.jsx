@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 const Login = () => {
   const [Data, setData] = useState({ username: "", password: "" });
   const history = useNavigate();
+
+  //selects the current authentication state from the Redux store. If the user is logged in, they are redirected to the home page.
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   if (isLoggedIn === true) {
     history("/");
@@ -16,6 +18,8 @@ const Login = () => {
     const { name, value } = e.target;
     setData({ ...Data, [name]: value });
   };
+  
+  //It checks if the fields are filled, sends a POST request to the login API, and handles the response.
   const submit = async () => {
     try {
       if (Data.username === "" || Data.email === "" || Data.password === "") {
